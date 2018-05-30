@@ -42,3 +42,23 @@ fun greeting (name: string option) =
   in  
     "Hello there, " ^ get_name name ^ "!"
   end
+
+fun repeat (list1, list2) =
+  let
+    fun append_x_times (number, x) =
+      if x = 0
+      then []
+        else number :: append_x_times(number, x - 1)
+    and repeat_internal (list1, list2) =
+      if null list1
+      then []
+      else
+        append_x_times (hd list1, hd list2) @ repeat_internal (tl list1, tl list2)
+  in
+    repeat_internal(list1, list2)
+  end
+
+fun addOpt (opt1, opt2) =
+  if isSome opt1 andalso isSome opt2
+  then SOME (valOf opt1 + valOf opt2)
+  else NONE
