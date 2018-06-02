@@ -32,3 +32,14 @@
                  (cons (if (= (remainder x 5) 0) (- 0 x) x)
                        (lambda () (f (+ x 1)))))])
     (lambda () (f 1))))
+
+(define dan-then-dog
+  (letrec ([dan (lambda() (cons "dan.jpg" dog))]
+           [dog (lambda() (cons "dog.jpg" dan))])
+    dan))
+
+(define (stream-add-zero s)
+  (letrec ([f (lambda (x)
+                (cons (cons 0 (car (x))) 
+                      (lambda () (f (cdr (x))))))])
+    (lambda () (f s))))
