@@ -59,4 +59,21 @@
                                                       (f (+ n 1)))]
                       [#t (f (+ n 1))]))])
     (f 0)))
-  
+
+(define (cached-assoc xs n)
+         (letrec
+             ([cache (make-vector n)]
+              [idx 0]
+              [find (lambda(x)
+                      (let ([cacheval (vector-assoc x cache)])
+                        (if cacheval
+                            cacheval
+                            (let ([val (vector-assoc x xs)])
+                              (if val
+                                  (begin
+                                    (vector-set! cache idx val)
+                                    (set! idx (remainder (+ idx 1) n))
+                                    val)
+                                  val)))))])
+           find))
+
