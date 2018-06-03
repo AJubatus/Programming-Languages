@@ -43,3 +43,20 @@
                 (cons (cons 0 (car (x))) 
                       (lambda () (f (cdr (x))))))])
     (lambda () (f s))))
+
+(define (cycle-lists xs ys)
+  (letrec ([f (lambda (n)
+              (cons (cons (list-nth-mod xs n) (list-nth-mod ys n))
+                    (lambda() (f (+ n 1)))))])
+    (lambda () (f 0))))
+
+(define (vector-assoc v vec)
+  (letrec ([vlen (vector-length vec)]
+           [f (lambda (n)
+                (cond [(>= n vlen) #f]
+                      [(pair? (vector-ref vec n)) (if (equal? (car (vector-ref vec n)) v)
+                                                      (vector-ref vec n)
+                                                      (f (+ n 1)))]
+                      [#t (f (+ n 1))]))])
+    (f 0)))
+  
