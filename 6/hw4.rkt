@@ -68,7 +68,7 @@
                       (let ([cacheval (vector-assoc x cache)])
                         (if cacheval
                             cacheval
-                            (let ([val (vector-assoc x xs)])
+                            (let ([val (assoc x xs)])
                               (if val
                                   (begin
                                     (vector-set! cache idx val)
